@@ -22,25 +22,25 @@ runSocketServer = async () => {
   socketServer.on("connection", async (socket) => {
     let meetingid = socket.request._query.meetingid;
     let user = JSON.parse(socket.request._query.user);
-    startMeeting(meetingid, user.dbId);
+    // startMeeting(meetingid, user.dbId);
     socket.join(meetingid);
     socket.on("disconnect", () => {
       if (!socketServer.sockets.adapter.rooms.get(meetingid)) {
         console.log("ended",socketServer.sockets.adapter.rooms.get(meetingid));
-        endMeeting(meetingid, user.dbId);
+        // endMeeting(meetingid, user.dbId);
       }
       socketServer.in(meetingid).emit("onMessage", {
         type: "removeUser",
         sessioId: socket.id,
       });
-      userS.removeUserFromList(meetingid, socket.id);
+      // userS.removeUserFromList(meetingid, socket.id);
     });
 
-    await userS.addMeeting(meetingid);
-    await userS.addIntoUserList(
-      meetingid,
-      new User(socket.id, meetingid, user.emailId, user.name, user.dbId)
-    );
+    // await userS.addMeeting(meetingid);
+    // await userS.addIntoUserList(
+    //   meetingid,
+    //   new User(socket.id, meetingid, user.emailId, user.name, user.dbId)
+    // );
     socket.on("getAllUser", async (data) => {
       socket.emit("onMessage", userService.getAllUserList());
     });

@@ -40,7 +40,7 @@ runHttpServer = async () => {
     });
     app.use("/peerjs", peerServer);
   }, 2000);
-
+  console.log("server is running")
   // return server.Server(app);
 };
 
